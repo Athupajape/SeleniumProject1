@@ -24,7 +24,7 @@ namespace SeleniumProject1
             options.AddArgument("start-maximized");
 
             IWebDriver driver = new ChromeDriver(options);
-
+            //driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl("https://www.amazon.in/");
 
             //Id
@@ -44,8 +44,12 @@ namespace SeleniumProject1
             //Console.WriteLine(list.Count);
 
             //CssSelector
-            driver.FindElement(By.CssSelector("input[type='text']")).SendKeys("T-Shirts");
+            //driver.FindElement(By.CssSelector("input[type='text']")).SendKeys("T-Shirts");
 
+            // Xpath
+            //We have 2 xpaths absolute xpath which starts from root node to the element node
+            //and second is relative xpath with syntax as //tagname[@attributename='value']
+            driver.FindElement(By.XPath("//input[@type='text']")).SendKeys("T-Shirts");
         }
     }
 }
