@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using WebDriverManager.DriverConfigs.Impl;
 
 namespace SeleniumProject1
@@ -50,6 +52,46 @@ namespace SeleniumProject1
             //We have 2 xpaths absolute xpath which starts from root node to the element node
             //and second is relative xpath with syntax as //tagname[@attributename='value']
             driver.FindElement(By.XPath("//input[@type='text']")).SendKeys("T-Shirts");
+        }
+
+        [Test]
+        public void Test2()
+        {
+            new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
+            IWebDriver driver = new ChromeDriver();
+
+            driver.Manage().Window.Maximize();
+            //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
+            driver.Navigate().GoToUrl("https://www.google.com/");
+            driver.FindElement(By.XPath("//textarea[@class='gLFyf']")).SendKeys("Selenium");
+            driver.FindElement(By.XPath("//textarea[@class='gLFyf']")).SendKeys(Keys.Enter);
+            driver.FindElement(By.XPath("//a[@href='https://www.selenium.dev/']")).Click();
+
+            //*[@name='q']
+        }
+
+
+        [Test]
+        public void Test3()
+        {
+            new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
+            IWebDriver driver = new ChromeDriver();
+
+            driver.Manage().Window.Maximize();
+            //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            //driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
+            driver.Navigate().GoToUrl("https://www.google.com/");
+            WebDriverWait webdriverwait = new WebDriverWait(driver,TimeSpan.FromSeconds(30));
+            //Fluent Wait ... Polling Interval in miliseconds
+            webdriverwait.PollingInterval = TimeSpan.FromMilliseconds(250);
+            webdriverwait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@name='q']")));
+
+            
+            driver.FindElement(By.XPath("//*[@name='q']")).SendKeys("Selenium");
+            
+
+            
         }
     }
 }
